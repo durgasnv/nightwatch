@@ -1,0 +1,6 @@
+node_modules/
+*.log
+pet_config.json
+nightwatch_data.json
+.DS_Store
+Thumbs.db

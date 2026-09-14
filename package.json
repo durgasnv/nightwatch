@@ -1,0 +1,23 @@
+{
+  "name": "nightwatch-wellness-buddy",
+  "version": "1.0.0",
+  "description": "Desktop wellness companion with a chibi Batman theme - watchful, protective health nudges",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "process-images": "python scripts/process_images.py"
+  },
+  "keywords": [
+    "wellness",
+    "desktop-buddy",
+    "pomodoro",
+    "hydration",
+    "batman",
+    "electron"
+  ],
+  "author": "Nightwatch Team",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^33.2.1"
+  }
+}
