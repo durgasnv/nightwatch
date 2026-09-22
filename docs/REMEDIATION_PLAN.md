@@ -32,6 +32,9 @@ This document tracks the production-readiness work identified in the repository 
 - [ ] Focus-session/Pomodoro mode with durable timers and session statistics.
 - [ ] Historical wellness records, charts, CSV/JSON export, and user-controlled retention.
 - [ ] Interactive mood-option controls with local mood history.
+- [x] Custom water/break routines with independent intervals and completion logging.
+- [x] Five- and fifteen-minute reminder snoozes.
+- [x] Configurable daily water and break goals with in-pet progress feedback.
 - [ ] Per-protocol reminder settings rather than one global check-in switch.
 - [ ] Reduced-motion, keyboard-navigation, high-contrast, and font-size accessibility settings.
 - [ ] Signed, versioned release builds and a deployment-safe website download link.

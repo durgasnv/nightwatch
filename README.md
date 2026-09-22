@@ -87,6 +87,10 @@ Access via Tray -> **Batcomputer Settings**:
 - **Enable/Disable Pet Companion**
 - **Visit Frequency**: 5m, 10m, 15m, 30m, 1h, or custom minutes
 - **Water Reminder Frequency**
+- **Break Reminder Frequency**
+- **Daily water and break goals**, with progress feedback after each completion
+- **Custom water/break routines** with individual reminder intervals
+- **Snooze reminder controls** for 5 or 15 minutes
 - **Random Check-ins & Stretches Toggle**
 - **Pet Size**: Small (95px), Medium (125px), Large (160px)
 - **Animation Speed**: Relaxed, Natural, Energetic
