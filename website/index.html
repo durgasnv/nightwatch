@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nightwatch — Desktop AI Wellness Companion</title>
+  <meta name="description" content="An animated, transparent, always-on-top chibi Batman companion that guards your focus, hydration, and posture with built-in chat and streak tracking.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/png" href="../assets/characters/tray-icon.png">
+</head>
+<body>
+  <!-- Ambient Atmospheric Lighting -->
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+  <div class="bat-signal-light"></div>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#" class="brand-logo">
+        <img src="../assets/characters/tray-icon.png" alt="Nightwatch Mascot" class="nav-icon">
+        <span class="brand-text">NIGHTWATCH</span>
+      </a>
+      <div class="nav-links">
+        <a href="#features">Protocols</a>
+        <a href="#interactive-demo">Live Simulator</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#specs">Specs</a>
+      </div>
+      <div class="nav-actions">
+        <a href="#download" class="nav-btn-primary">Download v1.0</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero-section">
+    <div class="hero-container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          <span>THE DESKTOP GUARDIAN COMPANION</span>
+        </div>
+        <h1 class="hero-title">
+          Gotham Needs You Focused.<br>
+          <span class="text-gold">Batman Keeps You Healthy.</span>
+        </h1>
+        <p class="hero-subtitle">
+          An animated, transparent, always-on-top desktop companion that floats gently on your screen. Nudges you for hydration, eye breaks, and spine stretches—with dual-mode AI chat, draggable summon controls, and daily streak tracking.
+        </p>
+
+        <div class="hero-cta-group" id="download">
+          <a href="../dist/Nightwatch Desktop Companion-win32-x64/Nightwatch Desktop Companion.exe" class="btn btn-hero-primary" download>
+            <span class="btn-icon">⚡</span>
+            <div class="btn-text-block">
+              <span class="btn-label">Download for Windows</span>
+              <span class="btn-subtext">Standalone .exe • No install needed (v1.0.0)</span>
+            </div>
+          </a>
+          <a href="#how-it-works" class="btn btn-hero-secondary">
+            <span>💻 Run from Source</span>
+          </a>
+        </div>
+
+        <div class="hero-metrics">
+          <div class="metric-item">
+            <span class="metric-val">100%</span>
+            <span class="metric-lbl">Transparent Window</span>
+          </div>
+          <div class="metric-divider"></div>
+          <div class="metric-item">
+            <span class="metric-val">0</span>
+            <span class="metric-lbl">Cloud Lock-in</span>
+          </div>
+          <div class="metric-divider"></div>
+          <div class="metric-item">
+            <span class="metric-val">Dual</span>
+            <span class="metric-lbl">Offline + AI Chat</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Interactive Mascot Card -->
+      <div class="hero-visual">
+        <div class="mascot-stage-card">
+          <div class="screen-frame-glow"></div>
+          
+          <!-- Speech Bubble -->
+          <div class="hero-bubble" id="hero-demo-bubble">
+            <div class="bubble-tag">🦇 BAT-PROTOCOL</div>
+            <div class="bubble-text" id="hero-demo-text">"Even the shadows require hydration. Drink water, citizen."</div>
+            <div class="bubble-action-tag" id="hero-demo-action">🎯 Drink 1 tall glass (250ml) now</div>
+          </div>
+
+          <!-- Animated Batman Sprite -->
+          <div class="mascot-avatar-wrap">
+            <img id="hero-mascot-img" src="../assets/characters/idle.png" alt="Chibi Batman" class="hero-mascot-sprite">
+            <div class="mascot-shadow"></div>
+          </div>
+
+          <div class="hero-stage-footer">
+            <div class="stage-status">
+              <span class="status-pulse"></span>
+              <span>PATROLLING WORKSPACE</span>
+            </div>
+            <div class="stage-helper">Hover or click below to interact</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Interactive Live Mascot Simulator Section -->
+  <section id="interactive-demo" class="section simulator-section">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="section-tag">TEST DRIVE IN BROWSER</span>
+        <h2 class="section-title">Trigger Batman's Protocols Live</h2>
+        <p class="section-desc">Experience how Batman responds with animations, expressions, and dialogues right in your browser.</p>
+      </div>
+
+      <div class="sim-grid">
+        <div class="sim-controls">
+          <button class="sim-btn active" data-pose="hydrate" data-tag="💧 HYDRATION PROTOCOL" data-text="Alfred prepared the water carafe. Drink a full glass now—do not make me deploy the Batmobile." data-action="Drink 1 tall glass (250ml)">
+            <span class="sim-btn-icon">💧</span>
+            <div class="sim-btn-content">
+              <strong>Hydration Check</strong>
+              <small>Reminds you to fuel up</small>
+            </div>
+          </button>
+
+          <button class="sim-btn" data-pose="break" data-tag="🦇 BATCOMPUTER COOLDOWN" data-text="Batcomputer cooldown: Look 20 feet away into the darkness for 20 seconds. Give your retinas a rest." data-action="Look 20 feet away for 20 seconds">
+            <span class="sim-btn-icon">🦇</span>
+            <div class="sim-btn-content">
+              <strong>20-20-20 Eye Break</strong>
+              <small>Prevents screen fatigue</small>
+            </div>
+          </button>
+
+          <button class="sim-btn" data-pose="break" data-tag="🧘 POSTURE RECALIBRATION" data-text="Posture check: Straighten your spine. You're slouching like a weathered gargoyle on Wayne Tower." data-action="Roll shoulders back, align neck">
+            <span class="sim-btn-icon">🧘</span>
+            <div class="sim-btn-content">
+              <strong>Gargoyle Posture Check</strong>
+              <small>Re-aligns your spine</small>
+            </div>
+          </button>
+
+          <button class="sim-btn" data-pose="mood" data-tag="🛡️ FORTITUDE CHECK" data-text="Nightwing, status report. What is your mental fortitude today?" data-action="Assess morale & mental clarity">
+            <span class="sim-btn-icon">🛡️</span>
+            <div class="sim-btn-content">
+              <strong>Mental Fortitude</strong>
+              <small>Checks in on stress levels</small>
+            </div>
+          </button>
+
+          <button class="sim-btn" data-pose="celebrate" data-tag="🌟 MILESTONE ACHIEVED" data-text="5 health milestones reached today! Even the Dark Knight smiles at this discipline." data-action="Consecutive day streak +1 🔥">
+            <span class="sim-btn-icon">🌟</span>
+            <div class="sim-btn-content">
+              <strong>Streak Milestone</strong>
+              <small>Celebrates your consistency</small>
+            </div>
+          </button>
+        </div>
+
+        <div class="sim-display-card">
+          <div class="sim-bubble-view">
+            <div class="bubble-arrow-left"></div>
+            <span class="sim-tag" id="sim-tag">💧 HYDRATION PROTOCOL</span>
+            <p class="sim-message" id="sim-message">"Alfred prepared the water carafe. Drink a full glass now—do not make me deploy the Batmobile."</p>
+            <div class="sim-action-pill" id="sim-action-pill">
+              <span>🎯</span> <span id="sim-action-text">Drink 1 tall glass (250ml)</span>
+            </div>
+          </div>
+          <div class="sim-mascot-view">
+            <img id="sim-sprite" src="../assets/characters/hydrate.png" alt="Batman Mascot" class="sim-sprite-img">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Features Grid -->
+  <section id="features" class="section features-section">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="section-tag">BUILT FOR FOCUS & WELLNESS</span>
+        <h2 class="section-title">Engineered to Protect Your Health</h2>
+        <p class="section-desc">Zero intrusive popups. Zero subscription fees. Just disciplined health nudges from the Dark Knight.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">✨</div>
+          <h3>100% Transparent UI</h3>
+          <p>Frameless, click-through-safe desktop window. Only the cute chibi Batman sprite and speech bubble render on your screen.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🐾</div>
+          <h3>Draggable Summon Button</h3>
+          <p>A floating 64px avatar pinned to your desktop. Click anytime to summon Batman, or drag it anywhere along your screen edge.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">💬</div>
+          <h3>Dual-Mode Comm-Link</h3>
+          <p>Instant offline regex intelligence with zero API keys required, plus optional encrypted OpenAI mode for customized conversation.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🔥</div>
+          <h3>Batcave Streak Records</h3>
+          <p>Tracks daily water intake, breaks taken, and consecutive day streaks with automatic midnight reset and all-time logs.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🖥️</div>
+          <h3>Multi-Monitor Sensing</h3>
+          <p>Batman automatically detects which monitor your cursor is actively working on and visits right beside your active window.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🌙</div>
+          <h3>Idle Sensing & Quiet Hours</h3>
+          <p>Senses system inactivity (>5m away from keyboard) and respects customizable quiet hours so you're never interrupted at night.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works / Quick Start -->
+  <section id="how-it-works" class="section how-it-works-section">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="section-tag">GET STARTED IN 10 SECONDS</span>
+        <h2 class="section-title">Three Ways to Run Nightwatch</h2>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-badge">METHOD 1</div>
+          <h3>Standalone .EXE</h3>
+          <p>No Node.js or setup required. Download the executable, double click, and Batman begins his patrol immediately.</p>
+          <a href="../dist/Nightwatch Desktop Companion-win32-x64/Nightwatch Desktop Companion.exe" class="step-link" download>Download .exe →</a>
+        </div>
+
+        <div class="step-card">
+          <div class="step-badge">METHOD 2</div>
+          <h3>Double-Click Batch</h3>
+          <p>If you have Node installed, simply double-click <code>run.bat</code> in the repository root. Dependencies auto-install on first run.</p>
+          <code class="code-snippet">run.bat</code>
+        </div>
+
+        <div class="step-card">
+          <div class="step-badge">METHOD 3</div>
+          <h3>Terminal / npm start</h3>
+          <p>Developers on Windows, Mac, or Linux can clone and start via npm directly in their terminal of choice.</p>
+          <code class="code-snippet">npm install && npm start</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technical Specs -->
+  <section id="specs" class="section specs-section">
+    <div class="section-container">
+      <div class="specs-card">
+        <div class="specs-left">
+          <h2>Technical Architecture</h2>
+          <p>Built on Electron 33 with strict security defaults, Context Isolation, and encrypted local persistence.</p>
+          <div class="specs-pills">
+            <span class="pill">Electron 33</span>
+            <span class="pill">Context Bridge IPC</span>
+            <span class="pill">Web Audio API</span>
+            <span class="pill">safeStorage Encryption</span>
+            <span class="pill">Pillow Flood-Fill Asset Pipeline</span>
+          </div>
+        </div>
+        <div class="specs-right">
+          <div class="spec-row">
+            <span class="spec-k">Supported OS</span>
+            <span class="spec-v">Windows 10/11, macOS, Linux</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-k">Memory Footprint</span>
+            <span class="spec-v">~55 MB (Idle)</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-k">Data Privacy</span>
+            <span class="spec-v">100% Local (Zero Telemetry)</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-k">License</span>
+            <span class="spec-v">MIT Open Source</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <img src="../assets/characters/tray-icon.png" alt="Logo" class="footer-logo">
+        <div>
+          <span class="footer-title">NIGHTWATCH</span>
+          <p class="footer-tagline">Gotham's vigilance at your desktop service.</p>
+        </div>
+      </div>
+      <div class="footer-copy">
+        Made with ❤️ for developers, designers, and night owls.
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
