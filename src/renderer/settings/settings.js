@@ -7,6 +7,13 @@ const customFreqRow = document.getElementById('custom-freq-row');
 const setCustomVisit = document.getElementById('set-custom-visit');
 const setWaterFreq = document.getElementById('set-water-freq');
 const setBreakFreq = document.getElementById('set-break-freq');
+const setWaterGoal = document.getElementById('set-water-goal');
+const setBreakGoal = document.getElementById('set-break-goal');
+const setRoutineName = document.getElementById('set-routine-name');
+const setRoutineType = document.getElementById('set-routine-type');
+const setRoutineInterval = document.getElementById('set-routine-interval');
+const btnAddRoutine = document.getElementById('btn-add-routine');
+const routineList = document.getElementById('routine-list');
 const setCheckins = document.getElementById('set-checkins');
 const setPetSize = document.getElementById('set-pet-size');
 const setAnimSpeed = document.getElementById('set-anim-speed');
@@ -29,6 +36,46 @@ const btnClose = document.getElementById('btn-close');
 const btnSave = document.getElementById('btn-save');
 const btnResetPos = document.getElementById('btn-reset-pos');
 const saveStatus = document.getElementById('save-status');
+let customRoutines = [];
+
+function renderRoutines() {
+  routineList.replaceChildren();
+  for (const routine of customRoutines) {
+    const item = document.createElement('div');
+    item.className = 'routine-item';
+    const label = document.createElement('span');
+    label.textContent = routine.name;
+    const meta = document.createElement('span');
+    meta.className = 'routine-meta';
+    meta.textContent = `${routine.type === 'water' ? 'Water' : 'Break'} • every ${routine.intervalMinutes}m`;
+    const remove = document.createElement('button');
+    remove.type = 'button';
+    remove.className = 'routine-remove';
+    remove.textContent = 'Remove';
+    remove.addEventListener('click', () => {
+      customRoutines = customRoutines.filter((item) => item.id !== routine.id);
+      renderRoutines();
+    });
+    item.append(label, meta, remove);
+    routineList.appendChild(item);
+  }
+}
+
+btnAddRoutine.addEventListener('click', () => {
+  const name = setRoutineName.value.trim();
+  const intervalMinutes = parseInt(setRoutineInterval.value, 10);
+  if (!name || !Number.isInteger(intervalMinutes) || intervalMinutes < 5 || intervalMinutes > 1440) return;
+  customRoutines.push({
+    id: `routine-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+    name,
+    type: setRoutineType.value,
+    intervalMinutes,
+    enabled: true,
+    lastTriggeredAt: null
+  });
+  setRoutineName.value = '';
+  renderRoutines();
+});
 
 // Dynamic UI updates
 setVisitFreq.addEventListener('change', () => {
@@ -85,6 +132,10 @@ window.settingsApi.getSettings().then(cfg => {
 
   setWaterFreq.value = cfg.waterIntervalMinutes || 30;
   setBreakFreq.value = cfg.breakIntervalMinutes || 25;
+  setWaterGoal.value = cfg.dailyWaterGoal || 8;
+  setBreakGoal.value = cfg.dailyBreakGoal || 4;
+  customRoutines = Array.isArray(cfg.customRoutines) ? cfg.customRoutines : [];
+  renderRoutines();
   setCheckins.checked = cfg.checkInsEnabled !== false;
   setPetSize.value = cfg.petSize || 'medium';
   setAnimSpeed.value = cfg.animationSpeed || 'normal';
@@ -118,6 +169,9 @@ btnSave.addEventListener('click', async () => {
     visitIntervalMinutes: visitMins,
     waterIntervalMinutes: parseInt(setWaterFreq.value, 10) || 30,
     breakIntervalMinutes: parseInt(setBreakFreq.value, 10) || 25,
+    dailyWaterGoal: parseInt(setWaterGoal.value, 10) || 8,
+    dailyBreakGoal: parseInt(setBreakGoal.value, 10) || 4,
+    customRoutines,
     checkInsEnabled: setCheckins.checked,
     petSize: setPetSize.value,
     animationSpeed: setAnimSpeed.value,

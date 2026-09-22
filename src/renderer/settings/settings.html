@@ -150,6 +150,32 @@
             <span class="slider"></span>
           </label>
         </div>
+
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Daily Goals</div>
+            <div class="setting-desc">Water glasses and completed breaks to aim for each day</div>
+          </div>
+          <div class="time-range-inputs">
+            <input type="number" id="set-water-goal" min="1" max="30" value="8" class="num-input" title="Daily water goal">
+            <input type="number" id="set-break-goal" min="1" max="30" value="4" class="num-input" title="Daily break goal">
+          </div>
+        </div>
+
+        <div class="setting-group">
+          <div class="setting-label">Custom Routines</div>
+          <div class="setting-desc">Create a water or break routine with its own reminder interval.</div>
+          <div class="routine-builder">
+            <input type="text" id="set-routine-name" maxlength="60" placeholder="e.g. Walk around the block" class="text-input">
+            <select id="set-routine-type" class="custom-select">
+              <option value="break">Break routine</option>
+              <option value="water">Water routine</option>
+            </select>
+            <input type="number" id="set-routine-interval" min="5" max="1440" value="60" class="num-input" title="Routine interval in minutes">
+            <button id="btn-add-routine" type="button" class="btn-action">Add</button>
+          </div>
+          <div id="routine-list" class="routine-list"></div>
+        </div>
       </div>
 
       <!-- Appearance & Animation -->
