@@ -16,11 +16,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const heroMascotImg = document.getElementById('hero-mascot-img');
 
   const spriteMap = {
-    hydrate: '../assets/characters/hydrate.png',
-    break: '../assets/characters/break.png',
-    mood: '../assets/characters/mood.png',
-    celebrate: '../assets/characters/celebrate.png',
-    idle: '../assets/characters/idle.png'
+    hydrate: 'assets/characters/hydrate.png',
+    break: 'assets/characters/break.png',
+    mood: 'assets/characters/mood.png',
+    celebrate: 'assets/characters/celebrate.png',
+    idle: 'assets/characters/idle.png'
   };
 
   // Web Audio Synth for Browser preview
