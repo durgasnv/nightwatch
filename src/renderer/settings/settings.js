@@ -40,6 +40,13 @@ let customRoutines = [];
 
 function renderRoutines() {
   routineList.replaceChildren();
+  if (customRoutines.length === 0) {
+    const empty = document.createElement('div');
+    empty.className = 'routine-empty';
+    empty.textContent = 'No custom routines yet. Add one to personalize your patrol.';
+    routineList.appendChild(empty);
+    return;
+  }
   for (const routine of customRoutines) {
     const item = document.createElement('div');
     item.className = 'routine-item';
@@ -99,10 +106,11 @@ function loadStats() {
     window.settingsApi.getStats().then(stats => {
       if (!stats) return;
       const s = stats.streaks || {};
+      const goals = stats.settings || {};
       statWaterToday.textContent = s.hydrationToday || 0;
-      statWaterTotal.textContent = `Total: ${s.totalHydration || 0}`;
+      statWaterTotal.textContent = `Total: ${s.totalHydration || 0} • Goal: ${goals.dailyWaterGoal || 8}`;
       statBreaksToday.textContent = s.breaksToday || 0;
-      statBreaksTotal.textContent = `Total: ${s.totalBreaks || 0}`;
+      statBreaksTotal.textContent = `Total: ${s.totalBreaks || 0} • Goal: ${goals.dailyBreakGoal || 4}`;
       const streak = Math.max(s.hydrationStreak || 0, s.breakStreak || 0);
       statStreakDays.textContent = streak;
     }).catch(err => {
