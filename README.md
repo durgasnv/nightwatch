@@ -14,7 +14,8 @@
 A self-contained Windows application package has been built:
 - **Location**: `dist/Nightwatch Desktop Companion-win32-x64/`
 - **Executable**: `dist/Nightwatch Desktop Companion-win32-x64/Nightwatch Desktop Companion.exe`
-- You can zip this folder or share the executable directly without requiring Node.js on the recipient's machine.
+- Share the full folder as a ZIP rather than the `.exe` alone; Electron requires its adjacent runtime files.
+- Publish `dist/Nightwatch-Desktop-Companion-win32-x64.zip` as the `v1.0.0` GitHub Release asset so the landing-page download links work.
 - To rebuild the package anytime, run:
   ```bash
   npm run package
