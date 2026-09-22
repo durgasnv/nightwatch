@@ -17,6 +17,9 @@ const DEFAULT_SETTINGS = {
   visitIntervalMinutes: 5,
   waterIntervalMinutes: 30,
   breakIntervalMinutes: 25,
+  dailyWaterGoal: 8,
+  dailyBreakGoal: 4,
+  customRoutines: [],
   checkInsEnabled: true,
   soundEnabled: true,
   animationSpeed: 'normal', // 'slow', 'normal', 'fast'
@@ -79,10 +82,14 @@ function sanitizeSettings(newSettings) {
   const waterInterval = getBoundedInteger(input.waterIntervalMinutes, 5, 180);
   const breakInterval = getBoundedInteger(input.breakIntervalMinutes, 5, 180);
   const idleThreshold = getBoundedInteger(input.idleThresholdSeconds, 30, 3600);
+  const dailyWaterGoal = getBoundedInteger(input.dailyWaterGoal, 1, 30);
+  const dailyBreakGoal = getBoundedInteger(input.dailyBreakGoal, 1, 30);
   if (visitInterval !== null) sanitized.visitIntervalMinutes = visitInterval;
   if (waterInterval !== null) sanitized.waterIntervalMinutes = waterInterval;
   if (breakInterval !== null) sanitized.breakIntervalMinutes = breakInterval;
   if (idleThreshold !== null) sanitized.idleThresholdSeconds = idleThreshold;
+  if (dailyWaterGoal !== null) sanitized.dailyWaterGoal = dailyWaterGoal;
+  if (dailyBreakGoal !== null) sanitized.dailyBreakGoal = dailyBreakGoal;
 
   if (['slow', 'normal', 'fast'].includes(input.animationSpeed)) {
     sanitized.animationSpeed = input.animationSpeed;
@@ -98,6 +105,26 @@ function sanitizeSettings(newSettings) {
 
   if (typeof input.apiKey === 'string' && input.apiKey.length <= 500) {
     sanitized.apiKey = input.apiKey.trim();
+  }
+
+  if (Array.isArray(input.customRoutines)) {
+    sanitized.customRoutines = input.customRoutines.slice(0, 12).flatMap((routine) => {
+      if (!routine || typeof routine !== 'object') return [];
+      const name = typeof routine.name === 'string' ? routine.name.trim().slice(0, 60) : '';
+      const intervalMinutes = getBoundedInteger(routine.intervalMinutes, 5, 1440);
+      const type = routine.type === 'water' ? 'water' : routine.type === 'break' ? 'break' : null;
+      if (!name || intervalMinutes === null || !type) return [];
+      return [{
+        id: typeof routine.id === 'string' && /^[a-zA-Z0-9_-]{1,64}$/.test(routine.id)
+          ? routine.id
+          : `routine-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+        name,
+        intervalMinutes,
+        type,
+        enabled: routine.enabled !== false,
+        lastTriggeredAt: Number.isFinite(routine.lastTriggeredAt) ? routine.lastTriggeredAt : null
+      }];
+    });
   }
 
   return sanitized;
@@ -339,6 +366,14 @@ class LocalStore {
 
   getLastBreakAt() {
     return Number.isFinite(this.data.streaks.lastBreakAt) ? this.data.streaks.lastBreakAt : null;
+  }
+
+  markRoutineTriggered(routineId) {
+    const routine = this.data.settings.customRoutines.find((item) => item.id === routineId);
+    if (!routine) return false;
+    routine.lastTriggeredAt = Date.now();
+    this.save();
+    return true;
   }
 }
 
