@@ -1,4 +1,5 @@
 node_modules/
+dist/
 *.log
 pet_config.json
 nightwatch_data.json
