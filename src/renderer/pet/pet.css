@@ -1,0 +1,410 @@
+:root {
+  --pet-size: 125px;
+  --anim-duration: 2.8s;
+  --walk-speed: 0.35s;
+  --gold-accent: #f5c518;
+  --gold-glow: rgba(245, 197, 24, 0.3);
+  --noir-bg: rgba(18, 22, 30, 0.94);
+  --bubble-bg: rgba(26, 32, 44, 0.95);
+  --text-main: #f0f6fc;
+  --text-dim: #8b949e;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background: transparent !important;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.pet-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 12px;
+  gap: 12px;
+}
+
+/* Character Container */
+.pet-container {
+  position: relative;
+  width: var(--pet-size);
+  height: var(--pet-size);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+  z-index: 20;
+}
+
+.pet-container:hover {
+  transform: translateY(-4px) scale(1.03);
+}
+
+.character-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: bottom center;
+}
+
+.pet-sprite {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.75));
+  pointer-events: auto;
+}
+
+/* Animations */
+/* 1. Idle Breathing & Bobbing */
+.pet-container.idle .character-wrapper {
+  animation: petBreathe var(--anim-duration) ease-in-out infinite;
+}
+
+@keyframes petBreathe {
+  0%, 100% {
+    transform: scale(1, 1) translateY(0);
+  }
+  50% {
+    transform: scale(1.025, 0.975) translateY(3px);
+  }
+}
+
+/* 2. Waddling Walk Motion */
+.pet-container.waddling .character-wrapper {
+  animation: petWaddle var(--walk-speed) ease-in-out infinite alternate;
+}
+
+@keyframes petWaddle {
+  0% {
+    transform: rotate(-6deg) translateY(0px) scale(0.98, 1.02);
+  }
+  100% {
+    transform: rotate(6deg) translateY(-6px) scale(1.02, 0.98);
+  }
+}
+
+/* 3. Direction Flipping */
+.pet-container.facing-left .character-wrapper {
+  transform: scaleX(-1);
+}
+
+.pet-container.facing-right .character-wrapper {
+  transform: scaleX(1);
+}
+
+/* 4. Blinking Effect */
+.blink-layer {
+  position: absolute;
+  top: 32%;
+  left: 20%;
+  width: 60%;
+  height: 24%;
+  pointer-events: none;
+  background: #25282e;
+  border-radius: 50%;
+  opacity: 0;
+  transform: scaleY(0.1);
+  transition: opacity 0.08s ease, transform 0.08s ease;
+}
+
+.pet-container.blinking .blink-layer {
+  opacity: 0.95;
+  transform: scaleY(1);
+}
+
+/* Speech Bubble (Beside pet, pointer toward pet) */
+.speech-bubble {
+  position: relative;
+  max-width: 250px;
+  background: var(--bubble-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(245, 197, 24, 0.35);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.65), 0 0 14px var(--gold-glow);
+  border-radius: 14px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 30;
+  margin-bottom: 20px;
+  animation: bubblePop 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes bubblePop {
+  0% { opacity: 0; transform: scale(0.85) translateY(10px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Arrow pointing to pet (on the right) */
+.bubble-arrow {
+  position: absolute;
+  top: 45%;
+  right: -8px;
+  width: 0;
+  height: 0;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  border-left: 8px solid var(--bubble-bg);
+}
+
+.bubble-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bubble-category {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--gold-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.bubble-close-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  font-size: 11px;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.bubble-close-btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.bubble-message {
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--text-main);
+  font-weight: 500;
+}
+
+.bubble-micro-action {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  background: rgba(245, 197, 24, 0.12);
+  border: 1px solid rgba(245, 197, 24, 0.25);
+  border-radius: 6px;
+  font-size: 11px;
+  color: #ffe066;
+  font-weight: 600;
+}
+
+.action-icon {
+  font-size: 12px;
+}
+
+.action-text {
+  flex: 1;
+}
+
+.bubble-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.bubble-btn {
+  flex: 1;
+  padding: 5px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.15s ease;
+}
+
+.bubble-btn.primary {
+  background: var(--gold-accent);
+  color: #0d1117;
+}
+
+.bubble-btn.primary:hover {
+  background: #ffe066;
+  transform: translateY(-1px);
+}
+
+.bubble-btn.secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-main);
+}
+
+.bubble-btn.secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Compact Chat Box */
+.chat-box {
+  width: 260px;
+  height: 250px;
+  background: var(--noir-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(245, 197, 24, 0.4);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 16px var(--gold-glow);
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 40;
+  margin-bottom: 10px;
+  animation: bubblePop 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px;
+  background: rgba(0, 0, 0, 0.35);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.chat-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gold-accent);
+}
+
+.chat-dot {
+  width: 6px;
+  height: 6px;
+  background: #3fb950;
+  border-radius: 50%;
+  box-shadow: 0 0 6px #3fb950;
+}
+
+.chat-close-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  font-size: 11px;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.chat-close-btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 8px 10px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.chat-messages::-webkit-scrollbar {
+  width: 4px;
+}
+.chat-messages::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+
+.chat-msg {
+  display: flex;
+  flex-direction: column;
+  max-width: 85%;
+}
+
+.chat-msg.pet {
+  align-self: flex-start;
+}
+
+.chat-msg.pet .msg-bubble {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-main);
+  border-radius: 10px 10px 10px 2px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.chat-msg.user {
+  align-self: flex-end;
+}
+
+.chat-msg.user .msg-bubble {
+  background: linear-gradient(135deg, #e5a823, #f5c518);
+  color: #0d1117;
+  font-weight: 600;
+  border-radius: 10px 10px 2px 10px;
+}
+
+.msg-bubble {
+  padding: 6px 9px;
+  font-size: 11px;
+  line-height: 1.35;
+  word-break: break-word;
+}
+
+.chat-input-bar {
+  display: flex;
+  padding: 6px 8px;
+  background: rgba(0, 0, 0, 0.4);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  gap: 6px;
+}
+
+.chat-input-bar input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  padding: 5px 8px;
+  color: #fff;
+  font-size: 11px;
+  outline: none;
+}
+
+.chat-input-bar input:focus {
+  border-color: var(--gold-accent);
+}
+
+.chat-send-btn {
+  background: var(--gold-accent);
+  border: none;
+  border-radius: 6px;
+  color: #0d1117;
+  padding: 0 8px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.chat-send-btn:hover {
+  background: #ffe066;
+}
+
+.hidden {
+  display: none !important;
+}

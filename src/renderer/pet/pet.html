@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Batman Desktop Companion</title>
+  <link rel="stylesheet" href="pet.css">
+</head>
+<body>
+  <div id="pet-stage" class="pet-stage">
+    
+    <!-- Speech Bubble (Positioned beside Batman, pointer towards him) -->
+    <div id="speech-bubble" class="speech-bubble hidden">
+      <div class="bubble-arrow"></div>
+      <div class="bubble-header">
+        <span id="bubble-category" class="bubble-category">🦇 BAT-PROTOCOL</span>
+        <button id="btn-bubble-close" class="bubble-close-btn" title="Dismiss">✕</button>
+      </div>
+      <p id="bubble-message" class="bubble-message">"Even the shadows require hydration. Drink water, citizen."</p>
+      <div id="bubble-micro-action" class="bubble-micro-action hidden">
+        <span class="action-icon">🎯</span>
+        <span id="micro-action-text" class="action-text"></span>
+      </div>
+      <div class="bubble-actions">
+        <button id="btn-bubble-action" class="bubble-btn primary">💧 Drank</button>
+        <button id="btn-bubble-chat" class="bubble-btn secondary">💬 Report</button>
+      </div>
+    </div>
+
+    <!-- Compact Chat Box (Inline with Batman) -->
+    <div id="chat-box" class="chat-box hidden">
+      <div class="chat-header">
+        <div class="chat-title">
+          <span class="chat-dot"></span>
+          <span>🦇 Dark Knight Comm-Link</span>
+        </div>
+        <button id="btn-chat-close" class="chat-close-btn" title="Close comm-link">✕</button>
+      </div>
+      <div id="chat-messages" class="chat-messages">
+        <div class="chat-msg pet">
+          <div class="msg-bubble">I am the night. Keeping watch over your desktop. What is your status, citizen?</div>
+        </div>
+      </div>
+      <form id="chat-form" class="chat-input-bar">
+        <input type="text" id="chat-input" placeholder="Transmit report to Batman..." autocomplete="off" maxlength="200">
+        <button type="submit" id="btn-chat-send" class="chat-send-btn">➤</button>
+      </form>
+    </div>
+
+    <!-- Animated Batman Chibi Character Container -->
+    <div id="pet-container" class="pet-container idle">
+      <div class="character-wrapper">
+        <!-- Chibi Batman Sprite Image -->
+        <img id="pet-sprite" src="../../../assets/characters/idle.png" alt="Batman Chibi Mascot" class="pet-sprite" />
+        
+        <!-- Eyelid / Blink Overlay -->
+        <div id="pet-blink-overlay" class="blink-layer"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="pet.js"></script>
+</body>
+</html>
