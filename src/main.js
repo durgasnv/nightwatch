@@ -196,7 +196,7 @@ function resetPositions() {
   }
 }
 
-function triggerPetVisit(category = null, customMessage = null) {
+function triggerPetVisit(category = null, customMessage = null, routine = null) {
   if (!petWindow || petWindow.isDestroyed()) return false;
 
   const settings = store.getSettings();
@@ -228,6 +228,18 @@ function triggerPetVisit(category = null, customMessage = null) {
   }
 
   let payload = getVisitPayload(category);
+  if (category === 'routine' && routine) {
+    payload = {
+      category: 'routine',
+      sprite: routine.type,
+      routineId: routine.id,
+      routineType: routine.type,
+      title: `🦇 CUSTOM ROUTINE: ${routine.name.toUpperCase()}`,
+      message: `Time for ${routine.name}. Gotham can spare ${routine.intervalMinutes} minutes.`,
+      action: routine.type === 'water' ? 'Drink and log a glass of water' : 'Complete the routine and log your break'
+    };
+    store.markRoutineTriggered(routine.id);
+  }
   if (customMessage) {
     payload.message = customMessage;
   }
@@ -260,8 +272,17 @@ function startScheduler() {
     const visitDue = now - lastVisitTime >= (settings.visitIntervalMinutes || 5) * 60 * 1000;
     const waterDue = now - lastWaterTime >= (settings.waterIntervalMinutes || 30) * 60 * 1000;
     const breakDue = now - lastBreakTime >= (settings.breakIntervalMinutes || 25) * 60 * 1000;
+    const routineDue = (settings.customRoutines || []).find((routine) => {
+      if (!routine.enabled) return false;
+      const lastTriggered = Number.isFinite(routine.lastTriggeredAt) ? routine.lastTriggeredAt : 0;
+      return now - lastTriggered >= routine.intervalMinutes * 60 * 1000;
+    });
 
-    if (waterDue || breakDue || (settings.checkInsEnabled !== false && visitDue)) {
+    if (waterDue || breakDue) {
+      triggerPetVisit();
+    } else if (routineDue) {
+      triggerPetVisit('routine', null, routineDue);
+    } else if (settings.checkInsEnabled !== false && visitDue) {
       triggerPetVisit();
     }
   }, 25 * 1000);
@@ -400,7 +421,7 @@ ipcMain.on('pet-exited', () => {
   }
 });
 
-ipcMain.handle('pet-action', (_event, { type }) => {
+ipcMain.handle('pet-action', (_event, { type, routineId }) => {
   let result = null;
   if (type === 'water') {
     result = store.recordHydration();
@@ -409,7 +430,15 @@ ipcMain.handle('pet-action', (_event, { type }) => {
     result = store.recordBreak();
     lastBreakTime = Date.now();
   }
+  if (routineId && typeof routineId === 'string') store.markRoutineTriggered(routineId);
   return result;
+});
+
+ipcMain.handle('snooze-reminder', (_event, { minutes }) => {
+  const duration = Number(minutes);
+  if (![5, 15].includes(duration)) return false;
+  store.setPause(duration);
+  return true;
 });
 
 ipcMain.handle('get-pet-config', () => {

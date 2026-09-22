@@ -8,7 +8,8 @@ contextBridge.exposeInMainWorld('petApi', {
   onConfigUpdated: (cb) => ipcRenderer.on('config-updated', (_e, cfg) => cb(cfg)),
 
   sendChat: (text, history) => ipcRenderer.invoke('send-chat', { text, history }),
-  recordAction: (type) => ipcRenderer.invoke('pet-action', { type }),
+  recordAction: (type, routineId = null) => ipcRenderer.invoke('pet-action', { type, routineId }),
+  snoozeReminder: (minutes) => ipcRenderer.invoke('snooze-reminder', { minutes }),
   getStats: () => ipcRenderer.invoke('get-stats'),
   onPetExited: () => ipcRenderer.send('pet-exited'),
   getConfig: () => ipcRenderer.invoke('get-pet-config')
