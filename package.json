@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "description": "Desktop wellness companion with a chibi Batman theme - watchful, protective health nudges",
   "main": "src/main.js",
+  "author": "Nightwatch Team",
+  "license": "MIT",
   "scripts": {
     "start": "electron .",
+    "package": "electron-packager . \"Nightwatch Desktop Companion\" --platform=win32 --arch=x64 --out=dist --icon=assets/characters/tray-icon.ico --prune=true --overwrite",
+    "preview:website": "start website/index.html",
     "process-images": "python scripts/process_images.py"
   },
   "keywords": [
@@ -15,9 +19,8 @@
     "batman",
     "electron"
   ],
-  "author": "Nightwatch Team",
-  "license": "MIT",
   "devDependencies": {
+    "@electron/packager": "^18.3.6",
     "electron": "^33.2.1"
   }
 }
