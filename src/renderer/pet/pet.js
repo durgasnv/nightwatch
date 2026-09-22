@@ -9,6 +9,8 @@ const bubbleMicroAction = document.getElementById('bubble-micro-action');
 const microActionText = document.getElementById('micro-action-text');
 const btnBubbleClose = document.getElementById('btn-bubble-close');
 const btnBubbleAction = document.getElementById('btn-bubble-action');
+const btnBubbleSnooze5 = document.getElementById('btn-bubble-snooze-5');
+const btnBubbleSnooze15 = document.getElementById('btn-bubble-snooze-15');
 const btnBubbleChat = document.getElementById('btn-bubble-chat');
 
 const chatBox = document.getElementById('chat-box');
@@ -24,6 +26,7 @@ let blinkInterval = null;
 let wanderInterval = null;
 let conversationHistory = [];
 let soundEnabled = true;
+let currentConfig = {};
 
 // Web Audio Synthesizer: Two-tone Batman sci-fi cue
 function playSound(type = 'chime') {
@@ -199,7 +202,7 @@ function showVisit(visitData) {
   currentVisit = visitData;
   if (visitTimeout) clearTimeout(visitTimeout);
 
-  setSprite(visitData.category || 'idle');
+  setSprite(visitData.sprite || visitData.category || 'idle');
   enterScreen(() => {
     playSound('chime');
 
@@ -208,7 +211,8 @@ function showVisit(visitData) {
       break: '🦇 BATCOMPUTER COOLDOWN',
       stretch: '🧘 POSTURE RECALIBRATION',
       greeting: '🦇 SHADOW PATROL',
-      mood: '🛡️ FORTITUDE CHECK'
+      mood: '🛡️ FORTITUDE CHECK',
+      routine: '🦇 CUSTOM ROUTINE'
     };
 
     const header = visitData.title || categoryLabels[visitData.category] || '🦇 BAT-PROTOCOL';
@@ -222,9 +226,9 @@ function showVisit(visitData) {
       bubbleMicroAction.classList.add('hidden');
     }
 
-    if (visitData.category === 'water') {
+    if (visitData.category === 'water' || (visitData.category === 'routine' && visitData.routineType === 'water')) {
       btnBubbleAction.textContent = '💧 Drank';
-    } else if (visitData.category === 'stretch' || visitData.category === 'break') {
+    } else if (visitData.category === 'stretch' || visitData.category === 'break' || visitData.category === 'routine') {
       btnBubbleAction.textContent = '🦇 Done';
     } else {
       btnBubbleAction.textContent = '✓ Stand By';
@@ -260,22 +264,36 @@ btnBubbleClose.addEventListener('click', () => {
 btnBubbleAction.addEventListener('click', async () => {
   playSound('celebrate');
   let statsResult = null;
-  if (currentVisit?.category === 'water') {
-    statsResult = await window.petApi.recordAction('water');
-  } else if (currentVisit?.category === 'break' || currentVisit?.category === 'stretch') {
-    statsResult = await window.petApi.recordAction('break');
+  const actionType = currentVisit?.category === 'routine' ? currentVisit.routineType :
+    currentVisit?.category === 'water' ? 'water' :
+    (currentVisit?.category === 'break' || currentVisit?.category === 'stretch' ? 'break' : null);
+  if (actionType) {
+    statsResult = await window.petApi.recordAction(actionType, currentVisit?.routineId);
   }
   
   setSprite('celebrate');
   bubbleMicroAction.classList.add('hidden');
   
-  const streakText = statsResult?.streak ? ` (Day Streak: ${statsResult.streak}🔥)` : '';
-  bubbleMessage.textContent = `"Discipline acknowledged${streakText}. The shadows approve."`;
+  const streakText = statsResult?.streak ? ` Day Streak: ${statsResult.streak}🔥.` : '';
+  const goal = actionType === 'water' ? currentConfig.dailyWaterGoal : currentConfig.dailyBreakGoal;
+  const goalText = statsResult?.today && goal ? ` ${statsResult.today}/${goal} today.` : '';
+  bubbleMessage.textContent = `"Discipline acknowledged.${goalText}${streakText} The shadows approve."`;
   
   setTimeout(() => {
     dismissVisit();
   }, 1600);
 });
+
+async function snoozeCurrentReminder(minutes) {
+  const snoozed = await window.petApi.snoozeReminder(minutes);
+  if (!snoozed) return;
+  bubbleMessage.textContent = `"Snoozed for ${minutes} minutes. Return ready for patrol."`;
+  bubbleMicroAction.classList.add('hidden');
+  setTimeout(() => dismissVisit(), 900);
+}
+
+btnBubbleSnooze5.addEventListener('click', () => snoozeCurrentReminder(5));
+btnBubbleSnooze15.addEventListener('click', () => snoozeCurrentReminder(15));
 
 btnBubbleChat.addEventListener('click', () => {
   speechBubble.classList.add('hidden');
@@ -390,6 +408,7 @@ window.petApi.onOpenChat(() => {
 });
 
 window.petApi.onConfigUpdated((cfg) => {
+  currentConfig = cfg;
   if (cfg.petSize) applyPetSize(cfg.petSize);
   if (cfg.animationSpeed) applyAnimationSpeed(cfg.animationSpeed);
   if (cfg.soundEnabled !== undefined) soundEnabled = cfg.soundEnabled;
@@ -400,6 +419,7 @@ startBlinking();
 startWandering();
 
 window.petApi.getConfig().then((cfg) => {
+  currentConfig = cfg;
   if (cfg.petSize) applyPetSize(cfg.petSize);
   if (cfg.animationSpeed) applyAnimationSpeed(cfg.animationSpeed);
   if (cfg.soundEnabled !== undefined) soundEnabled = cfg.soundEnabled;
