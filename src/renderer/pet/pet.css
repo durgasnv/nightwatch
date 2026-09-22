@@ -130,7 +130,7 @@ html, body {
 /* Speech Bubble (Beside pet, pointer toward pet) */
 .speech-bubble {
   position: relative;
-  max-width: 250px;
+  width: 250px;
   background: var(--bubble-bg);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
@@ -221,14 +221,15 @@ html, body {
 }
 
 .bubble-actions {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 6px;
   margin-top: 2px;
 }
 
 .bubble-btn {
-  flex: 1;
-  padding: 5px 8px;
+  min-width: 0;
+  padding: 6px 8px;
   border-radius: 6px;
   font-size: 11px;
   font-weight: 600;
@@ -254,6 +255,14 @@ html, body {
 
 .bubble-btn.secondary:hover {
   background: rgba(255, 255, 255, 0.2);
+}
+
+.bubble-btn:focus-visible,
+.chat-close-btn:focus-visible,
+.bubble-close-btn:focus-visible,
+.chat-send-btn:focus-visible {
+  outline: 2px solid var(--gold-accent);
+  outline-offset: 2px;
 }
 
 /* Compact Chat Box */
