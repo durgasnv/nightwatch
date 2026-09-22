@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Batcomputer Settings & Health Records</title>
+  <link rel="stylesheet" href="settings.css">
+</head>
+<body>
+  <div class="settings-container">
+    <div class="settings-header">
+      <div class="header-left">
+        <img src="../../../assets/characters/tray-icon.png" class="header-icon" alt="Pet">
+        <div>
+          <h2>Batcomputer Settings</h2>
+          <p class="subtitle">Customize Gotham patrol visits, sound cues, AI mode & view health stats</p>
+        </div>
+      </div>
+      <button id="btn-close" class="close-btn" title="Close">✕</button>
+    </div>
+
+    <div class="settings-body">
+      <!-- Live Stats Card -->
+      <div class="section-title">🦇 Batcave Health Records</div>
+      <div class="card stats-card">
+        <div class="stats-grid">
+          <div class="stat-box">
+            <span class="stat-icon">💧</span>
+            <div class="stat-content">
+              <span id="stat-water-today" class="stat-number">0</span>
+              <span class="stat-label">Glasses Today</span>
+              <span id="stat-water-total" class="stat-sub">Total: 0</span>
+            </div>
+          </div>
+          <div class="stat-box">
+            <span class="stat-icon">🦇</span>
+            <div class="stat-content">
+              <span id="stat-breaks-today" class="stat-number">0</span>
+              <span class="stat-label">Breaks Today</span>
+              <span id="stat-breaks-total" class="stat-sub">Total: 0</span>
+            </div>
+          </div>
+          <div class="stat-box">
+            <span class="stat-icon">🔥</span>
+            <div class="stat-content">
+              <span id="stat-streak-days" class="stat-number">0</span>
+              <span class="stat-label">Day Streak</span>
+              <span class="stat-sub">Consecutive Days</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- General Section -->
+      <div class="section-title">General</div>
+      <div class="card">
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Enable Pet Companion</div>
+            <div class="setting-desc">Keep Batman active and patrolling your desktop</div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="set-pet-enabled" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Always On Top</div>
+            <div class="setting-desc">Pet and summon button float above all other windows</div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="set-always-top" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Launch on Startup</div>
+            <div class="setting-desc">Automatically start your pet when Windows starts</div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="set-launch-startup">
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Audio Chimes</div>
+            <div class="setting-desc">Play gentle Bat-audio cues on visits and completions</div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="set-sound" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Visits & Reminders -->
+      <div class="section-title">Visits & Reminders</div>
+      <div class="card">
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Visit Frequency</div>
+            <div class="setting-desc">How often Batman stops by with a nudge</div>
+          </div>
+          <select id="set-visit-freq" class="custom-select">
+            <option value="5">Every 5 minutes (Default)</option>
+            <option value="10">Every 10 minutes</option>
+            <option value="15">Every 15 minutes</option>
+            <option value="30">Every 30 minutes</option>
+            <option value="60">Every 1 hour</option>
+            <option value="custom">Custom minutes...</option>
+          </select>
+        </div>
+
+        <div id="custom-freq-row" class="setting-row hidden">
+          <div>
+            <div class="setting-label">Custom Visit Minutes</div>
+          </div>
+          <input type="number" id="set-custom-visit" min="1" max="180" value="5" class="num-input">
+        </div>
+
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Water Reminder Frequency</div>
+            <div class="setting-desc">Minimum interval between hydration checks (mins)</div>
+          </div>
+          <input type="number" id="set-water-freq" min="5" max="180" value="30" class="num-input">
+        </div>
+
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Break Reminder Frequency</div>
+            <div class="setting-desc">Minimum interval between break reminders (mins)</div>
+          </div>
+          <input type="number" id="set-break-freq" min="5" max="180" value="25" class="num-input">
+        </div>
+
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Random Check-ins & Stretches</div>
+            <div class="setting-desc">Allow posture checks, fortitudes, and micro-stretch routines</div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="set-checkins" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Appearance & Animation -->
+      <div class="section-title">Appearance & Animation</div>
+      <div class="card">
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Pet Size</div>
+            <div class="setting-desc">Adjust size of your desktop mascot</div>
+          </div>
+          <select id="set-pet-size" class="custom-select">
+            <option value="small">Small (95px)</option>
+            <option value="medium" selected>Medium (125px)</option>
+            <option value="large">Large (160px)</option>
+          </select>
+        </div>
+
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Animation Speed</div>
+            <div class="setting-desc">Speed of walking and bobbing motion</div>
+          </div>
+          <select id="set-anim-speed" class="custom-select">
+            <option value="slow">Relaxed (Slow)</option>
+            <option value="normal" selected>Natural (Normal)</option>
+            <option value="fast">Energetic (Fast)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- AI Chat Mode -->
+      <div class="section-title">AI Chat (Optional)</div>
+      <div class="card">
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Enable OpenAI Chat</div>
+            <div class="setting-desc">Use ChatGPT with encrypted API key instead of offline responses</div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="set-ai-chat">
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div id="ai-key-container" class="setting-group hidden">
+          <label class="setting-label" for="set-api-key">OpenAI API Key</label>
+          <div class="setting-desc">Encrypted with OS-level credentials on your computer.</div>
+          <input type="password" id="set-api-key" placeholder="sk-proj-..." class="text-input">
+        </div>
+      </div>
+
+      <!-- Quiet Hours -->
+      <div class="section-title">Quiet Hours</div>
+      <div class="card">
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Enable Quiet Hours</div>
+            <div class="setting-desc">Suppress automatic visits during set hours</div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="set-quiet-hours">
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div id="quiet-time-row" class="setting-row hidden">
+          <div>
+            <div class="setting-label">Active Time Range</div>
+          </div>
+          <div class="time-range-inputs">
+            <input type="time" id="set-quiet-start" value="22:00" class="time-input">
+            <span>to</span>
+            <input type="time" id="set-quiet-end" value="08:00" class="time-input">
+          </div>
+        </div>
+      </div>
+
+      <!-- Troubleshoot / Reset -->
+      <div class="section-title">Troubleshooting</div>
+      <div class="card">
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Reset Window Positions</div>
+            <div class="setting-desc">Brings the pet and summon button back to bottom-right</div>
+          </div>
+          <button id="btn-reset-pos" class="btn-action">Reset Positions</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="settings-footer">
+      <div id="save-status" class="save-status hidden">Settings saved!</div>
+      <button id="btn-save" class="btn-primary">Save Settings</button>
+    </div>
+  </div>
+
+  <script src="settings.js"></script>
+</body>
+</html>
