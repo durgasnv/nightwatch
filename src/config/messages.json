@@ -1,0 +1,37 @@
+{
+  "greeting": [
+    "I'm keeping watch from the shadows. Stay focused, citizen.",
+    "Batcomputer monitoring in the background. Gotham is quiet for now.",
+    "Checking in from the shadows. How is your focus holding up?",
+    "No criminal activity detected on your desktop. Carry on.",
+    "Even the Dark Knight checks in on his allies. You doing okay?"
+  ],
+  "water": [
+    "Even the shadows require hydration. Drink water, citizen.",
+    "Dehydration is Gotham's quietest criminal. Fuel up before your mind dulls.",
+    "Alfred prepared the water carafe. Do not make me deploy the Batmobile to deliver it.",
+    "Gotham's defender requires clean liquid fuel. Grab your bottle.",
+    "The city never sleeps, but it stays hydrated. Drink up."
+  ],
+  "stretch": [
+    "Posture check: Straighten your spine. You're slouching like a weathered gargoyle on Wayne Tower.",
+    "Release tension in your wrists. You can't fire a grapple-gun with stiff joints and carpal tunnel.",
+    "Perimeter sweep: Stand up and walk around for 2 minutes. The Batcave can wait.",
+    "Inhale 4 seconds, hold 4, exhale 6. Recalibrate your mind for the next mission.",
+    "Roll your shoulders back. A hunched vigilante is an easy target."
+  ],
+  "break": [
+    "Batcomputer cooldown: Look 20 feet away into the darkness for 20 seconds. Give your retinas a rest.",
+    "Perimeter patrol: Step back from the Batcomputer. Scan the horizon.",
+    "Step away from the screen for 2 minutes. Even Batman knows when to pull back.",
+    "Your eyes are burning from the monitor. Stand down and rest your vision.",
+    "Cooldown initiated. Step away before fatigue compromises your judgment."
+  ],
+  "mood": [
+    "Nightwing, status report. What is your mental fortitude today?",
+    "The Bat-signal doesn't shine without a vigilant mind. How are you holding up?",
+    "The cowl carries heavy weight. Acknowledge your current mental state, ally.",
+    "Even Batman needs to assess morale. What's your status, citizen?",
+    "Status check: Are you steady, or is Gotham's weight wearing you down?"
+  ]
+}
